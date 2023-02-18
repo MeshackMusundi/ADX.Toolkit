@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <Authors>Meshack Musundi</Authors>
     <Description>Kusto (Azure Data Explorer) client utility for executing control commands and queries, with retries.</Description>
+    <PackageProjectUrl>https://github.com/MeshackMusundi/ADX.Toolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MeshackMusundi/ADX.Toolkit</RepositoryUrl>
+    <PackageTags>Kusto; ADX; Azure Data Explorer</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
