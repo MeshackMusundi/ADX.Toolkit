@@ -10,17 +10,17 @@ namespace ADX.Toolkit;
 public class KustoHelper
 {
     private readonly int _retries;
-    private readonly int minRetries = 0;
-    private readonly int baseWaitTime = 2;
-    
+
+    public static int BaseWaitTime { get; } = 2;
     public static int MaxRetries { get; } = 5;
+    public static int MinRetries { get; } = 0;
 
     /// <param name="retries">Number of times a command/query execution should be retried.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if retries value is <= <see cref="minRetries"/>
-    /// or greater than <see cref="maxRetries"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if retries value is <= <see cref="MinRetries"/>
+    /// or greater than <see cref="MaxRetries"/>.</exception>
     public KustoHelper(int retries = 2)
     {
-        Guard.IsGreaterThan(retries, minRetries);
+        Guard.IsGreaterThan(retries, MinRetries);
         Guard.IsLessThanOrEqualTo(retries, MaxRetries);
 
         _retries = retries;
@@ -58,7 +58,7 @@ public class KustoHelper
         var requestProperties = new ClientRequestProperties() { ClientRequestId = Guid.NewGuid().ToString() };
 
         var retryPolicy = Policy.Handle<Exception>()
-            .WaitAndRetryAsync(_retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(baseWaitTime, retryAttempt)));
+            .WaitAndRetryAsync(_retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(BaseWaitTime, retryAttempt)));
 
         var dataReader = retryPolicy.ExecuteAsync((ct)
             => commandProvider.ExecuteControlCommandAsync(database, command, requestProperties), cancellationToken);
@@ -89,7 +89,7 @@ public class KustoHelper
         var clientRequestProperties = new ClientRequestProperties() { ClientRequestId = Guid.NewGuid().ToString() };
 
         var retryPolicy = Policy.Handle<Exception>()
-            .WaitAndRetryAsync(_retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(baseWaitTime, retryAttempt)));
+            .WaitAndRetryAsync(_retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(BaseWaitTime, retryAttempt)));
 
         var dataReader = retryPolicy.ExecuteAsync((ct)
             => queryProvider.ExecuteQueryAsync(database, query, clientRequestProperties), cancellationToken);
