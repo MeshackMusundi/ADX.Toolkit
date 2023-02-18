@@ -33,7 +33,7 @@ public class KustoHelper
     /// or greater than 5.</exception>
     public KustoHelper(int retries = 2)
     {
-        Guard.IsGreaterThanOrEqualTo(retries, MinRetries);
+        Guard.IsGreaterThan(retries, MinRetries);
         Guard.IsLessThanOrEqualTo(retries, MaxRetries);
 
         _retries = retries;
