@@ -16,7 +16,7 @@ public class KustoHelper
 
     private int _baseWaitTime = 2;
     /// <summary>
-    /// The base wait time for retries in seconds.
+    /// The base wait time for retries, in seconds.
     /// </summary>
     public int BaseWaitTime
     {
@@ -50,7 +50,7 @@ public class KustoHelper
 
     /// <summary>
     /// Executes a Kusto control command. Retries are executed with exponential backoff
-    /// with a base wait time of 2 sec.
+    /// with a base wait time, in seconds, of <see cref="BaseWaitTime"/>.
     /// </summary>
     /// <param name="cluster">The Kusto cluster URL.</param>
     /// <param name="database">The database name.</param>
@@ -62,7 +62,6 @@ public class KustoHelper
         CancellationToken cancellationToken = default)
     {
         ValidateParameters(cluster, database, appID, appKey, appTenant);
-
         Guard.IsNotNullOrEmpty(command);
 
         var connectionStringBuilder = new KustoConnectionStringBuilder(cluster, database)
@@ -82,7 +81,7 @@ public class KustoHelper
 
     /// <summary>
     /// Executes a Kusto query. Retries are executed with exponential backoff
-    /// with a base wait time of 2 sec.
+    /// with a base wait time, in seconds, of <see cref="BaseWaitTime"/>.
     /// </summary>
     /// <param name="cluster">The Kusto cluster URL.</param>
     /// <param name="database">The database name.</param>
@@ -94,7 +93,6 @@ public class KustoHelper
         CancellationToken cancellationToken = default)
     {
         ValidateParameters(cluster, database, appID, appKey, appTenant);
-
         Guard.IsNotNullOrEmpty(query);
 
         var connectionStringBuilder = new KustoConnectionStringBuilder(cluster, database)
