@@ -10,17 +10,30 @@ namespace ADX.Toolkit;
 public class KustoHelper
 {
     private readonly int _retries;
-
-    public static int BaseWaitTime { get; } = 2;
+    
     public static int MaxRetries { get; } = 5;
     public static int MinRetries { get; } = 0;
 
+    private int _baseWaitTime = 2;
+    /// <summary>
+    /// The base wait time for retries in seconds.
+    /// </summary>
+    public int BaseWaitTime
+    {
+        get => _baseWaitTime;
+        set
+        { 
+            if (value < 0) throw new ArgumentOutOfRangeException(nameof(BaseWaitTime));
+            _baseWaitTime = value; 
+        }
+    }
+
     /// <param name="retries">Number of times a command/query execution should be retried.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown if retries value is <= <see cref="MinRetries"/>
-    /// or greater than <see cref="MaxRetries"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if retries value is less than zero
+    /// or greater than 5.</exception>
     public KustoHelper(int retries = 2)
     {
-        Guard.IsGreaterThan(retries, MinRetries);
+        Guard.IsGreaterThanOrEqualTo(retries, MinRetries);
         Guard.IsLessThanOrEqualTo(retries, MaxRetries);
 
         _retries = retries;
@@ -36,7 +49,8 @@ public class KustoHelper
     }
 
     /// <summary>
-    /// Executes a Kusto control command. Retries are executed with exponential backoff.
+    /// Executes a Kusto control command. Retries are executed with exponential backoff
+    /// with a base wait time of 2 sec.
     /// </summary>
     /// <param name="cluster">The Kusto cluster URL.</param>
     /// <param name="database">The database name.</param>
@@ -67,7 +81,8 @@ public class KustoHelper
     }
 
     /// <summary>
-    /// Executes a Kusto query. Retries are executed with exponential backoff.
+    /// Executes a Kusto query. Retries are executed with exponential backoff
+    /// with a base wait time of 2 sec.
     /// </summary>
     /// <param name="cluster">The Kusto cluster URL.</param>
     /// <param name="database">The database name.</param>
