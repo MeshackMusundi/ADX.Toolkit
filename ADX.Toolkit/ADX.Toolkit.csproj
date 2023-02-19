@@ -5,12 +5,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>Meshack Musundi</Authors>
-    <Description>Kusto (Azure Data Explorer) client wrapper for executing control commands and queries, with retries using exponential backoff.</Description>
+    <Description>Kusto (Azure Data Explorer) client wrapper for executing control commands and queries with retries using exponential backoff.</Description>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/MeshackMusundi/ADX.Toolkit</RepositoryUrl>
     <PackageTags>kusto; adx; azure data explorer</PackageTags>
     <Title>ADX.Toolkit</Title>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.1.0" />
