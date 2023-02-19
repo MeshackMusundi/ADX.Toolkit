@@ -15,7 +15,8 @@ var appID = "<appID>";
 var appSecret = "<appSecret>";
 var appTenant = "<appTenant>";
 
-var kustoHelper = new KustoHelper(4); // Four retries
+var kustoHelper = new KustoHelper(4); // Four retries.
+kustoHelper.BaseWaitTime = 4; // Change base wait time for retries to 4 seconds.
 IDataReader? dataReader = await kustoHelper.ExecuteCommandAsync(cluster, database, command, appID, appSecret, appTenant);
 ```
 
