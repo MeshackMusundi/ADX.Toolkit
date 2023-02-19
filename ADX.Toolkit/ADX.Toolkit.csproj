@@ -5,10 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>Meshack Musundi</Authors>
-    <Description>Kusto (Azure Data Explorer) client utility for executing control commands and queries, with retries.</Description>
-    <PackageProjectUrl>https://github.com/MeshackMusundi/ADX.Toolkit</PackageProjectUrl>
+    <Description>Kusto (Azure Data Explorer) client utility for executing control commands and queries, with retries using exponential backoff.</Description>
+    <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/MeshackMusundi/ADX.Toolkit</RepositoryUrl>
-    <PackageTags>Kusto; ADX; Azure Data Explorer</PackageTags>
+    <PackageTags>kusto; adx; azure data explorer</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
