@@ -11,6 +11,8 @@
     <PackageTags>kusto; adx; azure data explorer</PackageTags>
     <Title>ADX.Toolkit</Title>
     <PackageReadmeFile></PackageReadmeFile>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
