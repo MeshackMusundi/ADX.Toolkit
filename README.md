@@ -15,9 +15,9 @@ var appID = "<appID>";
 var appSecret = "<appSecret>";
 var appTenant = "<appTenant>";
 
-var kustoHelper = new KustoHelper(4); // Four retries.
+var kustoHelper = new KustoHelper();
 kustoHelper.BaseWaitTime = 4; // Base wait time for retries changed to 4 sec.
-IDataReader? dataReader = await kustoHelper.ExecuteCommandAsync(cluster, database, command, appID, appSecret, appTenant);
+IDataReader? dataReader = await kustoHelper.ExecuteCommandAsync(cluster, database, command, appID, appSecret, appTenant, 3); // 3 retries
 ```
 
 ## Query
@@ -29,6 +29,6 @@ var appID = "<appID>";
 var appSecret = "<appSecret>";
 var appTenant = "<appTenant>";
 
-var kustoHelper = new KustoHelper(2); // Two retries (default)
+var kustoHelper = new KustoHelper();
 IDataReader? dataReader = await kustoHelper.ExecuteQueryAsync(cluster, database, query, appID, appSecret, appTenant);
 ```
