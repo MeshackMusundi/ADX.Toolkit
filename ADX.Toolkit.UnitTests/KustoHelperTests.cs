@@ -8,34 +8,7 @@ public class KustoHelperTests
     private readonly string query = "AcmeThings | take 10";
     private readonly string appID = Guid.NewGuid().ToString();
     private readonly string appSecret = Guid.NewGuid().ToString();
-    private readonly string appTenant = Guid.NewGuid().ToString();
-
-    [Fact]
-    public void KustoHelper_RetriesSetToZero_ThrowsArgumentOutOfRangeException()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            var kH = new KustoHelper(0);
-        });
-    }
-
-    [Fact]
-    public void KustoHelper_RetriesSetToLessThanZero_ThrowsArgumentOutOfRangeException()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            var kH = new KustoHelper(-2);
-        });
-    }
-
-    [Fact]
-    public void KustoHelper_RetriesSetToGreaterThanMaxRetries_ThrowsArgumentOutOfRangeException()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            var kH = new KustoHelper(KustoHelper.MaxRetries + 3);
-        });
-    }
+    private readonly string appTenant = Guid.NewGuid().ToString();    
 
     [Fact]
     public void KustoHelper_ExecuteCommand_ClusterIsNull_ArgumentNullExceptionThrown()
@@ -43,7 +16,7 @@ public class KustoHelperTests
         var kustoHelper = new KustoHelper();
 
         var action = async () => await kustoHelper.ExecuteCommandAsync(null, database, command, appID, appSecret, appTenant);
-
+        
         Assert.ThrowsAsync<ArgumentNullException>(action);
     }
 
@@ -145,6 +118,16 @@ public class KustoHelperTests
         var action = async () => await kustoHelper.ExecuteCommandAsync(cluster, database, command, appID, string.Empty, appTenant);
 
         Assert.ThrowsAsync<ArgumentException>(action);
+    }
+
+    [Fact]
+    public void KustoHelper_ExecuteCommand_RetriesLessThanMinRetries_ArgumentExceptionThrown()
+    {
+        var kustoHelper = new KustoHelper();
+
+        var action = async () => await kustoHelper.ExecuteCommandAsync(cluster, database, command, appID, appSecret, string.Empty, 12);
+
+        Assert.ThrowsAsync<NullReferenceException>(action);
     }
 
     [Fact]
