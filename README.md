@@ -4,7 +4,7 @@ Kusto client wrapper for executing control commands and queries with retries usi
 # Usage
 Install NuGet package.
 ```
-dotnet add package ADX.Toolkit --version 1.0.0
+dotnet add package ADX.Toolkit --version 1.1.0
 ```
 ## Control Command
 ```cs
