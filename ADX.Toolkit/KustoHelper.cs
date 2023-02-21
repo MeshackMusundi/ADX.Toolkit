@@ -47,7 +47,7 @@ public class KustoHelper
     /// <param name="appKey">The application secret.</param>
     /// <param name="appTenant">The application tenant.</param>
     /// <param name="retries">The number of retry executions.</param>
-    public Task<IDataReader?> ExecuteCommandAsync(string cluster, string database, string command, string appID, string appKey, string appTenant,
+    public async Task<IDataReader?> ExecuteCommandAsync(string cluster, string database, string command, string appID, string appKey, string appTenant,
         int retries = 2, CancellationToken cancellationToken = default)
     {
         ValidateParameters(cluster, database, appID, appKey, appTenant, retries);
@@ -62,8 +62,8 @@ public class KustoHelper
         var retryPolicy = Policy.Handle<Exception>()
             .WaitAndRetryAsync(retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(BaseWaitTime, retryAttempt)));
 
-        var dataReader = retryPolicy.ExecuteAsync((ct)
-            => commandProvider.ExecuteControlCommandAsync(database, command, requestProperties), cancellationToken);
+        var dataReader = await retryPolicy.ExecuteAsync(async (ct)
+            => await commandProvider.ExecuteControlCommandAsync(database, command, requestProperties), cancellationToken);
 
         return dataReader;
     }
@@ -79,7 +79,7 @@ public class KustoHelper
     /// <param name="appKey">The application secret.</param>
     /// <param name="appTenant">The application tenant.</param>
     /// <param name="retries">The number of retry executions.</param>
-    public Task<IDataReader?> ExecuteQueryAsync(string cluster, string database, string query, string appID, string appKey, string appTenant,
+    public async Task<IDataReader?> ExecuteQueryAsync(string cluster, string database, string query, string appID, string appKey, string appTenant,
         int retries = 2, CancellationToken cancellationToken = default)
     {
         ValidateParameters(cluster, database, appID, appKey, appTenant, retries);
@@ -94,8 +94,8 @@ public class KustoHelper
         var retryPolicy = Policy.Handle<Exception>()
             .WaitAndRetryAsync(retries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(BaseWaitTime, retryAttempt)));
 
-        var dataReader = retryPolicy.ExecuteAsync((ct)
-            => queryProvider.ExecuteQueryAsync(database, query, clientRequestProperties), cancellationToken);
+        var dataReader = await retryPolicy.ExecuteAsync(async (ct)
+            => await queryProvider.ExecuteQueryAsync(database, query, clientRequestProperties), cancellationToken);
 
         return dataReader;
     }
